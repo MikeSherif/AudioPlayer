@@ -9,6 +9,7 @@ function App() {
 
   return (
     <div className="container">
+        <p>Плеер</p>
       <AudioPlayer audioSrc="audio/audio.mp3"/>
     </div>
   )
