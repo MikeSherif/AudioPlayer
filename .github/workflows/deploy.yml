@@ -26,5 +26,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: main  # Ветка для деплоя
+          branch: gh-pages  # Ветка для деплоя
           folder: dist      # Директория сビルдом (для Vite это dist)
