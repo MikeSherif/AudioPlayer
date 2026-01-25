@@ -116,7 +116,7 @@ const AudioPlayer = ({ audioSrc }) => {
                 backgroundRepeat: 'no-repeat',
                 height: 'clamp(18.75rem, 10.3929rem + 41.7857vw, 48rem)',
                 borderRadius: '35px',
-                transition: 'background-image 0.6s ease-out' // чуть короче переход
+                transition: 'background-image 0.1s' // чуть короче переход
             }}
         >
             <div className="audioWrapper">
