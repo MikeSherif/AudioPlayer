@@ -134,5 +134,17 @@ p,span,button {
     box-shadow: 0 0 0 3px  rgba(86, 86, 86, 0.3);
 }
 
+@media (max-width: 1200px) {
+    .audioWrapper {
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .audioWrapper {
+        width: 85%;
+    }
+}
+
 
 
