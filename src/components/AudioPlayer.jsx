@@ -62,9 +62,7 @@ const AudioPlayer = ({audioSrc}) => {
         }}>
             <div className="audioWrapper">
                 <button className="audioButton" onClick={handlePlayPause}>
-
                         {isPlaying ? <PauseIcon/> : <PlayIcon/>}
-
                 </button>
                 <div className="audioInfo">
                     <div className="audioDuration">
