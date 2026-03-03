@@ -15,11 +15,27 @@ const AudioPlayer = ({ audioSrc }) => {
     const backgrounds = [
         {
             time: 0,
-            url: 'https://react.avtor-dev.ru/upload/iblock/3b5/0nrenw1rzthb18h8wovcaal3y6gmpomv/a03.png'
+            url: 'img/01.png'
         },
         {
             time: 5,
-            url: 'https://react.avtor-dev.ru/upload/iblock/c72/zdd8ytojpw5bjf54rfslyhppr3gojai9/b01.webp'
+            url: 'img/02.webp'
+        },
+        {
+            time: 10,
+            url: 'img/03.jpg'
+        },
+        {
+            time: 15,
+            url: 'img/01.png'
+        },
+        {
+            time: 20,
+            url: 'img/02.webp'
+        },
+        {
+            time: 25,
+            url: 'img/03.jpg'
         }
     ];
 
@@ -116,7 +132,7 @@ const AudioPlayer = ({ audioSrc }) => {
                 backgroundRepeat: 'no-repeat',
                 height: 'clamp(18.75rem, 10.3929rem + 41.7857vw, 48rem)',
                 borderRadius: '35px',
-                transition: 'background-image 0.1s' // чуть короче переход
+                transition: 'background-image 0.3s' // чуть короче переход
             }}
         >
             <div className="audioWrapper">
