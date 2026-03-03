@@ -140,6 +140,7 @@ p,span,button {
     }
 }
 
+
 @media (max-width: 768px) {
     .audioWrapper {
         width: 85%;
