@@ -15,11 +15,11 @@ const AudioPlayer = ({ audioSrc }) => {
     const backgrounds = [
         {
             time: 0,
-            url: 'img/01.png'
+            url: 'img/01.jpg'
         },
         {
             time: 5,
-            url: 'img/02.webp'
+            url: 'img/02.jpg'
         },
         {
             time: 10,
@@ -27,16 +27,128 @@ const AudioPlayer = ({ audioSrc }) => {
         },
         {
             time: 15,
-            url: 'img/01.png'
+            url: 'img/04.jpg'
         },
         {
             time: 20,
-            url: 'img/02.webp'
+            url: 'img/05.jpg'
         },
         {
             time: 25,
-            url: 'img/03.jpg'
-        }
+            url: 'img/06.jpg'
+        },
+        {
+            time: 30,
+            url: 'img/07.jpg'
+        },
+        {
+            time: 35,
+            url: 'img/08.jpg'
+        },
+        {
+            time: 40,
+            url: 'img/09.jpg'
+        },
+        {
+            time: 45,
+            url: 'img/10.jpg'
+        },
+        {
+            time: 50,
+            url: 'img/11.jpg'
+        },
+        {
+            time: 55,
+            url: 'img/12.jpg'
+        },
+        {
+            time: 60,
+            url: 'img/13.jpg'
+        },
+        {
+            time: 65,
+            url: 'img/14.jpg'
+        },
+        {
+            time: 70,
+            url: 'img/15.jpg'
+        },
+        {
+            time: 75,
+            url: 'img/16.jpg'
+        },
+        {
+            time: 80,
+            url: 'img/17.jpg'
+        },
+        {
+            time: 85,
+            url: 'img/18.jpg'
+        },
+        {
+            time: 90,
+            url: 'img/19.jpg'
+        },
+        {
+            time: 95,
+            url: 'img/20.jpg'
+        },
+        {
+            time: 100,
+            url: 'img/21.jpg'
+        },
+        {
+            time: 105,
+            url: 'img/22.png'
+        },
+        {
+            time: 110,
+            url: 'img/23.png'
+        },
+        {
+            time: 115,
+            url: 'img/24.jpg'
+        },
+        {
+            time: 120,
+            url: 'img/25.jpg'
+        },
+        {
+            time: 125,
+            url: 'img/26_1.jpg'
+        },
+        {
+            time: 130,
+            url: 'img/26.jpg'
+        },
+        {
+            time: 135,
+            url: 'img/27.jpg'
+        },
+        {
+            time: 140,
+            url: 'img/28.jpg'
+        },
+        {
+            time: 145,
+            url: 'img/29.jpg'
+        },
+        {
+            time: 150,
+            url: 'img/30.jpg'
+        },
+        {
+            time: 155,
+            url: 'img/31.jpg'
+        },
+        {
+            time: 160,
+            url: 'img/32.jpg'
+        },
+        {
+            time: 165,
+            url: 'img/33.jpg'
+        },
     ];
 
     const updateBackground = (time) => {
@@ -54,7 +166,7 @@ const AudioPlayer = ({ audioSrc }) => {
                 }
             }
             setCurrentBgIndex(newIndex);
-        }, 180);
+        }, 280);
     };
 
     useEffect(() => {
