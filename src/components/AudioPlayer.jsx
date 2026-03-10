@@ -12,6 +12,10 @@ const AudioPlayer = ({ audioSrc }) => {
     const audioRef = useRef(null);
     const debounceTimer = useRef(null);
 
+    useEffect(() => {
+        console.log(currentBgIndex);
+    },[currentBgIndex]);
+
     const backgrounds = [
         {
             time: 0,
@@ -148,7 +152,7 @@ const AudioPlayer = ({ audioSrc }) => {
         {
             time: 165,
             url: 'img/33.jpg'
-        },
+        }
     ];
 
     const updateBackground = (time) => {
@@ -166,7 +170,7 @@ const AudioPlayer = ({ audioSrc }) => {
                 }
             }
             setCurrentBgIndex(newIndex);
-        }, 280);
+        }, 180);
     };
 
     useEffect(() => {
