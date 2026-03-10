@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className="container">
-      <AudioPlayer audioSrc="audio/audio.mp3"/>
+      <AudioPlayer audioSrc="audio/1.mp3"/>
     </div>
   )
 }
