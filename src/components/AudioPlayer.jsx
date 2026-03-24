@@ -1,177 +1,83 @@
-import { useEffect, useRef, useState } from 'react';
-import "./AudioPlayer.css";
-import { PlayIcon, PauseIcon } from "./icons.jsx";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import './AudioPlayer.css';
+import { ArrowLeftIcon, ArrowRightIcon, PauseIcon, PlayIcon } from './icons.jsx';
+
+const AUDIO_TOTAL_SECONDS = 26 * 60 + 50;
 
 const AudioPlayer = ({ audioSrc }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [currentBgIndex, setCurrentBgIndex] = useState(0);
-    const [isDragging, setIsDragging] = useState(false); // флаг перетаскивания ползунка
+    const [isDragging, setIsDragging] = useState(false);
 
     const audioRef = useRef(null);
-    const debounceTimer = useRef(null);
+    const lastAutoBgIndexRef = useRef(0);
+    const isDraggingRef = useRef(false);
+
+    const backgrounds = useMemo(
+        () => [
+            { time: 71, url: 'img/01.jpg' },
+            { time: 150, url: 'img/02.jpg' },
+            { time: 233, url: 'img/03.jpg' },
+            { time: 292, url: 'img/04.jpg' },
+            { time: 336, url: 'img/05.jpg' },
+            { time: 359, url: 'img/06.jpg' },
+            { time: 440, url: 'img/07.jpg' },
+            { time: 684, url: 'img/08.jpg' },
+            { time: 747, url: 'img/09.jpg' },
+            { time: 904, url: 'img/10.jpg' },
+            { time: 937, url: 'img/11.jpg' },
+            { time: 1003, url: 'img/12.jpg' },
+            { time: 1005, url: 'img/13.jpg' },
+            { time: 1079, url: 'img/14.jpg' },
+            { time: 1080, url: 'img/15.jpg' },
+            { time: 1200, url: 'img/16.jpg' },
+            { time: 1214, url: 'img/17.jpg' },
+            { time: 1234, url: 'img/18.jpg' },
+            { time: 1289, url: 'img/19.jpg' },
+            { time: 1310, url: 'img/20.jpg' },
+            { time: 1330, url: 'img/21.jpg' },
+            { time: 1350, url: 'img/22.png' },
+            { time: 1360, url: 'img/23.png' },
+            { time: 1430, url: 'img/24.jpg' },
+            { time: 1460, url: 'img/25.jpg' },
+            { time: 1485, url: 'img/26_1.jpg' },
+            { time: 1515, url: 'img/26.jpg' },
+            { time: 1525, url: 'img/27.jpg' },
+            { time: 1539, url: 'img/28.jpg' },
+            { time: 1553, url: 'img/29.jpg' },
+            { time: 1568, url: 'img/30.jpg' },
+            { time: 1582, url: 'img/31.jpg' },
+            { time: 1596, url: 'img/32.jpg' },
+            { time: 1610, url: 'img/33.jpg' }
+        ],
+        []
+    );
+
+    const findBgIndexByTime = (time) => {
+        let newIndex = 0;
+        for (let i = 0; i < backgrounds.length; i++) {
+            if (time >= backgrounds[i].time) {
+                newIndex = i;
+            } else {
+                break;
+            }
+        }
+        return newIndex;
+    };
 
     useEffect(() => {
-        console.log(currentBgIndex);
-    },[currentBgIndex]);
+        const images = backgrounds.map(({ url }) => {
+            const image = new Image();
+            image.src = url;
+            return image;
+        });
 
-    const backgrounds = [
-        {
-            time: 0,
-            url: 'img/01.jpg'
-        },
-        {
-            time: 5,
-            url: 'img/02.jpg'
-        },
-        {
-            time: 10,
-            url: 'img/03.jpg'
-        },
-        {
-            time: 15,
-            url: 'img/04.jpg'
-        },
-        {
-            time: 20,
-            url: 'img/05.jpg'
-        },
-        {
-            time: 25,
-            url: 'img/06.jpg'
-        },
-        {
-            time: 30,
-            url: 'img/07.jpg'
-        },
-        {
-            time: 35,
-            url: 'img/08.jpg'
-        },
-        {
-            time: 40,
-            url: 'img/09.jpg'
-        },
-        {
-            time: 45,
-            url: 'img/10.jpg'
-        },
-        {
-            time: 50,
-            url: 'img/11.jpg'
-        },
-        {
-            time: 55,
-            url: 'img/12.jpg'
-        },
-        {
-            time: 60,
-            url: 'img/13.jpg'
-        },
-        {
-            time: 65,
-            url: 'img/14.jpg'
-        },
-        {
-            time: 70,
-            url: 'img/15.jpg'
-        },
-        {
-            time: 75,
-            url: 'img/16.jpg'
-        },
-        {
-            time: 80,
-            url: 'img/17.jpg'
-        },
-        {
-            time: 85,
-            url: 'img/18.jpg'
-        },
-        {
-            time: 90,
-            url: 'img/19.jpg'
-        },
-        {
-            time: 95,
-            url: 'img/20.jpg'
-        },
-        {
-            time: 100,
-            url: 'img/21.jpg'
-        },
-        {
-            time: 105,
-            url: 'img/22.png'
-        },
-        {
-            time: 110,
-            url: 'img/23.png'
-        },
-        {
-            time: 115,
-            url: 'img/24.jpg'
-        },
-        {
-            time: 120,
-            url: 'img/25.jpg'
-        },
-        {
-            time: 125,
-            url: 'img/26_1.jpg'
-        },
-        {
-            time: 130,
-            url: 'img/26.jpg'
-        },
-        {
-            time: 135,
-            url: 'img/27.jpg'
-        },
-        {
-            time: 140,
-            url: 'img/28.jpg'
-        },
-        {
-            time: 145,
-            url: 'img/29.jpg'
-        },
-        {
-            time: 150,
-            url: 'img/30.jpg'
-        },
-        {
-            time: 155,
-            url: 'img/31.jpg'
-        },
-        {
-            time: 160,
-            url: 'img/32.jpg'
-        },
-        {
-            time: 165,
-            url: 'img/33.jpg'
-        }
-    ];
-
-    const updateBackground = (time) => {
-        if (debounceTimer.current) {
-            clearTimeout(debounceTimer.current);
-        }
-
-        debounceTimer.current = setTimeout(() => {
-            let newIndex = 0;
-            for (let i = 0; i < backgrounds.length; i++) {
-                if (time >= backgrounds[i].time) {
-                    newIndex = i;
-                } else {
-                    break;
-                }
-            }
-            setCurrentBgIndex(newIndex);
-        }, 180);
-    };
+        return () => {
+            images.length = 0;
+        };
+    }, [backgrounds]);
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -179,22 +85,32 @@ const AudioPlayer = ({ audioSrc }) => {
 
         const handleTimeUpdate = () => {
             const time = audio.currentTime;
-            setCurrentTime(time);
+            if (isDraggingRef.current) return;
 
-            // Обновляем фон только если НЕ перетаскиваем ползунок
-            if (!isDragging) {
-                updateBackground(time);
+            setCurrentTime(time);
+            const timedIndex = findBgIndexByTime(time);
+            if (timedIndex !== lastAutoBgIndexRef.current) {
+                lastAutoBgIndexRef.current = timedIndex;
+                setCurrentBgIndex(timedIndex);
             }
         };
 
         const handleLoaded = () => {
-            setDuration(audio.duration || 0);
-            setCurrentBgIndex(0);
+            const mediaDuration = audio.duration || 0;
+            const timedIndex = findBgIndexByTime(audio.currentTime);
+            setDuration(mediaDuration || AUDIO_TOTAL_SECONDS);
+            lastAutoBgIndexRef.current = timedIndex;
+            setCurrentBgIndex(timedIndex);
+        };
+
+        const handleEnded = () => {
+            setIsPlaying(false);
         };
 
         audio.addEventListener('timeupdate', handleTimeUpdate);
         audio.addEventListener('loadedmetadata', handleLoaded);
         audio.addEventListener('canplay', handleLoaded);
+        audio.addEventListener('ended', handleEnded);
 
         if (audio.readyState >= 1) {
             handleLoaded();
@@ -204,29 +120,65 @@ const AudioPlayer = ({ audioSrc }) => {
             audio.removeEventListener('timeupdate', handleTimeUpdate);
             audio.removeEventListener('loadedmetadata', handleLoaded);
             audio.removeEventListener('canplay', handleLoaded);
-            if (debounceTimer.current) clearTimeout(debounceTimer.current);
+            audio.removeEventListener('ended', handleEnded);
         };
-    }, [isDragging]); // зависимость от перетаскивания ренджа
+    }, [backgrounds]);
+
+    const goToSlide = (index) => {
+        const normalizedIndex = Math.max(0, Math.min(index, backgrounds.length - 1));
+        setCurrentBgIndex(normalizedIndex);
+    };
 
     const handleSeekStart = () => {
+        isDraggingRef.current = true;
         setIsDragging(true);
     };
 
-    const handleSeekEnd = (e) => {
+    const handleSeekEnd = () => {
+        isDraggingRef.current = false;
         setIsDragging(false);
-        const newTime = Number(e.target.value);
-        audioRef.current.currentTime = newTime;
-        setCurrentTime(newTime);
-        updateBackground(newTime);
     };
 
+    const handleSeekChange = (newTime) => {
+        if (audioRef.current) {
+            audioRef.current.currentTime = newTime;
+        }
+        setCurrentTime(newTime);
+        const timedIndex = findBgIndexByTime(newTime);
+        lastAutoBgIndexRef.current = timedIndex;
+        setCurrentBgIndex(timedIndex);
+    };
+
+    useEffect(() => {
+        if (!isDragging) return undefined;
+
+        const stopDragging = () => {
+            isDraggingRef.current = false;
+            setIsDragging(false);
+        };
+
+        window.addEventListener('pointerup', stopDragging);
+        window.addEventListener('pointercancel', stopDragging);
+
+        return () => {
+            window.removeEventListener('pointerup', stopDragging);
+            window.removeEventListener('pointercancel', stopDragging);
+        };
+    }, [isDragging]);
+
     const handlePlayPause = () => {
+        if (!audioRef.current) return;
+
         if (isPlaying) {
             audioRef.current.pause();
-        } else {
-            audioRef.current.play().catch(e => console.log("Play blocked:", e));
+            setIsPlaying(false);
+            return;
         }
-        setIsPlaying(!isPlaying);
+
+        audioRef.current.play().then(() => setIsPlaying(true)).catch((e) => {
+            console.log('Play blocked:', e);
+            setIsPlaying(false);
+        });
     };
 
     const formatTime = (seconds) => {
@@ -236,21 +188,36 @@ const AudioPlayer = ({ audioSrc }) => {
         return `${min}:${sec.toString().padStart(2, '0')}`;
     };
 
-    const currentBackground = backgrounds[currentBgIndex]?.url || '';
-
     return (
-        <div
-            className="audioPlayer"
-            style={{
-                backgroundImage: currentBackground ? `url(${currentBackground})` : 'none',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                height: 'clamp(18.75rem, 10.3929rem + 41.7857vw, 48rem)',
-                borderRadius: '35px',
-                transition: 'background-image 0.3s' // чуть короче переход
-            }}
-        >
+        <div className="audioPlayer" style={{ height: 'clamp(18.75rem, 10.3929rem + 41.7857vw, 48rem)' }}>
+            <div className="audioBackgrounds" aria-hidden="true">
+                {backgrounds.map((background, index) => (
+                    <div
+                        key={background.url}
+                        className={`audioBackgroundLayer ${index === currentBgIndex ? 'isActive' : ''}`}
+                        style={{ backgroundImage: `url(${background.url})` }}
+                    />
+                ))}
+            </div>
+
+            <button
+                className="slideNavButton slideNavButtonPrev"
+                onClick={() => goToSlide(currentBgIndex - 1)}
+                disabled={currentBgIndex === 0}
+                aria-label="Предыдущий слайд"
+            >
+                <ArrowLeftIcon />
+            </button>
+
+            <button
+                className="slideNavButton slideNavButtonNext"
+                onClick={() => goToSlide(currentBgIndex + 1)}
+                disabled={currentBgIndex === backgrounds.length - 1}
+                aria-label="Следующий слайд"
+            >
+                <ArrowRightIcon />
+            </button>
+
             <div className="audioWrapper">
                 <button className="audioButton" onClick={handlePlayPause}>
                     {isPlaying ? <PauseIcon /> : <PlayIcon />}
@@ -259,26 +226,27 @@ const AudioPlayer = ({ audioSrc }) => {
                 <div className="audioInfo">
                     <div className="audioDuration">
                         <p className="audioDurationText">{formatTime(currentTime)}</p>
-                        <p className="audioDurationText">{formatTime(duration)}</p>
+                        <p className="audioDurationText">{formatTime(duration || AUDIO_TOTAL_SECONDS)}</p>
                     </div>
 
                     <input
                         className="audioRange"
                         type="range"
                         min="0"
-                        max={duration || 100}
+                        max={duration || AUDIO_TOTAL_SECONDS}
                         step="any"
                         value={currentTime}
-                        onPointerDown={handleSeekStart}    // начало drag
-                        onPointerUp={handleSeekEnd}        // конец drag
+                        onPointerDown={handleSeekStart}
+                        onPointerUp={handleSeekEnd}
+                        onPointerCancel={handleSeekEnd}
                         onChange={(e) => {
-                            // во время drag обновляем только время, фон — нет
-                            setCurrentTime(Number(e.target.value));
+                            const newTime = Number(e.target.value);
+                            handleSeekChange(newTime);
                         }}
                     />
                 </div>
 
-                <audio ref={audioRef} src={audioSrc} preload="metadata" />
+                <audio ref={audioRef} src={audioSrc} preload="auto" />
             </div>
         </div>
     );
